@@ -8,3 +8,6 @@ FROM
   JOIN teachers ON teacher_id = teachers.id
 WHERE
   cohorts.name = 'JUL02'
+ORDER BY
+  teacher;
+  
