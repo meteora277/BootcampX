@@ -9,18 +9,16 @@ const pool = new Pool({
   database: "bootcampx"
 });
 
-let [cohortName, limit = 5] = args;
+let queryString = `
+SELECT students.id, students.name, cohorts.name AS cohort
+FROM students
+JOIN cohorts ON cohort_id = cohorts.id
+WHERE cohorts.name = $1
+LIMIT $2
+`;
 
 pool
-  .query(
-    `
-  SELECT students.id, students.name, cohorts.name AS cohort
-  FROM students
-  JOIN cohorts ON cohort_id = cohorts.id
-  WHERE cohorts.name = '${cohortName}'
-  LIMIT ${limit}
-`
-  )
+  .query(queryString, args)
   .then((res) => {
     res.rows.forEach(user => {
       console.log(`${user.name} has an id of ${user.student_id} and was in the ${user.cohort} cohort`);
