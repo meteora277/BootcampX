@@ -9,7 +9,7 @@ const pool = new Pool({
   database: "bootcampx"
 });
 
-let [cohortName = 'JUL12'] = args;
+let cohortName = [args[0] || 'JUL02'];
 
 let queryString = `
 SELECT
@@ -29,7 +29,7 @@ teacher;
 console.log("connected!");
 
 pool
-  .query(queryString, args)
+  .query(queryString, cohortName)
   .then((res) => {
     res.rows.forEach((user) => {
       console.log(`${user.cohort}: ${user.teacher}`);
